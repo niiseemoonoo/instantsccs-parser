@@ -33,7 +33,7 @@ export function main(): void {
   }
 }
 
-function findResults(lines : string[]){
+function findResults(lines: string[]) {
   const results: { [key: string]: TestResult } = {};
 
   const relevantTests = [
