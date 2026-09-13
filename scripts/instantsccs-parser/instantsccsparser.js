@@ -805,14 +805,26 @@ function _taggedTemplateLiteral(e, t) { return t || (t = e.slice(0)), Object.fre
 
 function main() {
   sinceKolmafiaRevision(27822);
-  var logs = (0,external_kolmafia_namespaceObject.sessionLogs)(1);
+  var days = 7;
+  var logs = (0,external_kolmafia_namespaceObject.sessionLogs)(days);
   if (logs.length === 0) {
     throw "No session logs found.";
   }
-  var logText = logs[0];
-  var lines = logText.split(/[\r\n]+/);
-  var relevantTests = ["Booze Drop", "Spell Damage", "Weapon Damage", "Familiar Weight", "Combat Rate", "Hot Resistance", "Moxie", "Muscle", "Mysticality", "HP"];
+  (0,external_kolmafia_namespaceObject.print)("Checking up to ".concat(days, " days back!"));
+  for (var i = days; i > 0; i--) {
+    var logText = logs[i - 1];
+    if (logText.length > 0) {
+      var lines = logText.split(/[\r\n]+/);
+      (0,external_kolmafia_namespaceObject.print)("Results for ".concat(i, " days back:"));
+      findResults(lines);
+    } else {
+      (0,external_kolmafia_namespaceObject.print)("No session log for ".concat(i, " days back:"));
+    }
+  }
+}
+function findResults(lines) {
   var results = {};
+  var relevantTests = ["Booze Drop", "Spell Damage", "Weapon Damage", "Familiar Weight", "Combat Rate", "Hot Resistance", "Moxie", "Muscle", "Mysticality", "HP"];
   for (var i = 0; i < lines.length; i++) {
     var totalMetricMatch = lines[i].match(/^> Total (.+?): ([-\d.]+)$/);
     if (totalMetricMatch) {
