@@ -9,12 +9,32 @@ type TestResult = {
 
 export function main(): void {
   sinceKolmafiaRevision(27822);
-  const logs = sessionLogs(1);
+
+  const days = 7;
+
+  const logs = sessionLogs(days);
   if (logs.length === 0) {
     throw "No session logs found.";
   }
-  const logText = logs[0];
-  const lines = logText.split(/[\r\n]+/);
+  
+  print(`Checking up to ${days} days back!`);
+  
+  for (let i = days; i > 0; i--) {
+    var logText = logs[i - 1];
+
+    if (logText.length > 0) {
+      var lines = logText.split(/[\r\n]+/);
+
+      print(`Results for ${i} days back:`);
+      findResults(lines);
+    } else {
+      print(`No session log for ${i} days back:`);
+    }
+  }
+}
+
+function findResults(lines : string[]){
+  var results: { [key: string]: TestResult } = {};
 
   const relevantTests = [
     "Booze Drop",
@@ -28,8 +48,6 @@ export function main(): void {
     "Mysticality",
     "HP",
   ];
-
-  const results: { [key: string]: TestResult } = {};
 
   for (let i = 0; i < lines.length; i++) {
     const totalMetricMatch = lines[i].match(/^> Total (.+?): ([-\d.]+)$/);
