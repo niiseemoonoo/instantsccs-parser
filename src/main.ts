@@ -16,14 +16,14 @@ export function main(): void {
   if (logs.length === 0) {
     throw "No session logs found.";
   }
-  
+
   print(`Checking up to ${days} days back!`);
-  
+
   for (let i = days; i > 0; i--) {
-    var logText = logs[i - 1];
+    let logText = logs[i - 1];
 
     if (logText.length > 0) {
-      var lines = logText.split(/[\r\n]+/);
+      let lines = logText.split(/[\r\n]+/);
 
       print(`Results for ${i} days back:`);
       findResults(lines);
@@ -34,7 +34,7 @@ export function main(): void {
 }
 
 function findResults(lines : string[]){
-  var results: { [key: string]: TestResult } = {};
+  let results: { [key: string]: TestResult } = {};
 
   const relevantTests = [
     "Booze Drop",
