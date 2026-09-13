@@ -20,10 +20,10 @@ export function main(): void {
   print(`Checking up to ${days} days back!`);
 
   for (let i = days; i > 0; i--) {
-    let logText = logs[i - 1];
+    const logText = logs[i - 1];
 
     if (logText.length > 0) {
-      let lines = logText.split(/[\r\n]+/);
+      const lines = logText.split(/[\r\n]+/);
 
       print(`Results for ${i} days back:`);
       findResults(lines);
@@ -34,7 +34,7 @@ export function main(): void {
 }
 
 function findResults(lines : string[]){
-  let results: { [key: string]: TestResult } = {};
+  const results: { [key: string]: TestResult } = {};
 
   const relevantTests = [
     "Booze Drop",
